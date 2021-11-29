@@ -40,7 +40,7 @@ router.get("/offers", async (req, res) => {
   // console.log(Number(req.query.price));
   try {
     const limitToShow = 6;
-    const sort = req.query.sort.replace("price-", "");
+    const sort = req.query.sort; // .replace("price-", "")
     let priceMax = req.query.priceMax;
     let priceMin = req.query.priceMin;
     let pageToSkip = Number(req.query.page) * limitToShow;
