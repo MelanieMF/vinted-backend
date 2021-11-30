@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Offer = require("../models/Offer");
+const User = require("../models/User");
 
 const cloudinary = require("cloudinary");
 
@@ -47,7 +48,7 @@ router.get("/offers", async (req, res) => {
     if (!pageToSkip) {
       pageToSkip = 0;
     }
-    const filter = {};
+    let filter = {};
     if (req.query.product_name) {
       filter.product_name = new RegExp(req.query.title, "i");
     }
@@ -67,14 +68,17 @@ router.get("/offers", async (req, res) => {
     }
 
     const offers = await Offer.find(filter)
-      .populate("owner.account")
+      .populate({
+        path: "owner",
+        select: "account",
+      })
       .limit(limitToShow)
       .skip(pageToSkip)
       .sort(sort)
       .select("product_name product_price");
-    // res.json(filter);
     res.json(offers);
   } catch (error) {
+    console.log(error.message);
     res.status(400).json({ error: { message: error.message } });
   }
 });
