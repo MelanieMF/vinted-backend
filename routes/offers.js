@@ -67,7 +67,7 @@ router.get("/offers", async (req, res) => {
       };
     }
 
-    const offers = await Offer.find(filter)
+    const offers = await Offer.find(filters)
       .populate({
         path: "owner",
         select: "account",
