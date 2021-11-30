@@ -8,6 +8,7 @@ const uid2 = require("uid2");
 const User = require("../models/User");
 const Offer = require("../models/Offer");
 
+const cloudinary = require("cloudinary");
 // console.log("test");
 
 router.post("/user/signup", async (req, res) => {
@@ -34,10 +35,10 @@ router.post("/user/signup", async (req, res) => {
           salt: salt,
         });
 
-        const resultPicture = await cloudinary.uploader.upload(
-          req.files.pictures.path
-        );
-        newUser.product_image = resultPicture;
+        // const resultPicture = await cloudinary.uploader.upload(
+        //   req.files.pictures.path
+        // );
+        // newUser.product_image = resultPicture;
 
         await newUser.save();
         res.json({
