@@ -72,8 +72,8 @@ router.get("/offers", async (req, res) => {
         path: "owner",
         select: "account",
       })
-      .limit(limitToShow)
-      .skip(pageToSkip)
+      // .limit(limitToShow)
+      // .skip(pageToSkip)
       .sort(sort);
     // .select("product_name product_price");
     const count = await Offer.countDocuments(filters);
