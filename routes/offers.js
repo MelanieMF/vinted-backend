@@ -48,7 +48,7 @@ router.get("/offers", async (req, res) => {
     if (!pageToSkip) {
       pageToSkip = 0;
     }
-    let filter = {};
+    let filters = {};
     if (req.query.product_name) {
       filter.product_name = new RegExp(req.query.title, "i");
     }
