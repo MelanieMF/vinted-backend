@@ -35,10 +35,12 @@ router.post("/user/signup", async (req, res) => {
           salt: salt,
         });
 
-        // const resultPicture = await cloudinary.uploader.upload(
-        //   req.files.pictures.path
-        // );
-        // newUser.product_image = resultPicture;
+        if (req.files.picture) {
+          const resultPicture = await cloudinary.uploader.upload(
+            req.files.pictures.path
+          );
+          newUser.product_image = resultPicture;
+        }
 
         await newUser.save();
         res.json({
