@@ -14,22 +14,17 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
     console.log(req.files.picture.path);
 
     const newOffer = new Offer({
-      count: req.fields.offers,
-      offers: [
-        {
-          product_details: [
-            { MARQUE: req.fields.brand },
-            { TAILLE: req.fields.size },
-            { ETAT: req.fields.condition },
-            { COULEUR: req.fields.color },
-            { EMPLACEMENT: req.fields.city },
-          ],
-          product_name: req.fields.title,
-          product_description: req.fields.description,
-          product_price: req.fields.price,
-          owner: req.user,
-        },
+      product_details: [
+        { MARQUE: req.fields.brand },
+        { TAILLE: req.fields.size },
+        { ETAT: req.fields.condition },
+        { COULEUR: req.fields.color },
+        { EMPLACEMENT: req.fields.city },
       ],
+      product_name: req.fields.title,
+      product_description: req.fields.description,
+      product_price: req.fields.price,
+      owner: req.user,
     });
 
     const result = await cloudinary.uploader.upload(req.files.picture.path);
@@ -81,7 +76,12 @@ router.get("/offers", async (req, res) => {
       .skip(pageToSkip)
       .sort(sort);
     // .select("product_name product_price");
-    res.json(offers);
+    const count = await Offer.countDocuments(filters);
+
+    res.json({
+      count: count,
+      offers: offers,
+    });
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ error: { message: error.message } });
