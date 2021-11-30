@@ -40,7 +40,7 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
 router.get("/offers", async (req, res) => {
   // console.log(Number(req.query.price));
   try {
-    const limitToShow = 9;
+    const limitToShow = 15;
     const sort = req.query.sort; // .replace("price-", "")
     let priceMax = req.query.priceMax;
     let priceMin = req.query.priceMin;
@@ -72,8 +72,8 @@ router.get("/offers", async (req, res) => {
         path: "owner",
         select: "account",
       })
-      // .limit(limitToShow)
-      // .skip(pageToSkip)
+      .limit(limitToShow)
+      .skip(pageToSkip)
       .sort(sort);
     // .select("product_name product_price");
     const count = await Offer.countDocuments(filters);
