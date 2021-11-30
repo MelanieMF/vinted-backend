@@ -50,19 +50,19 @@ router.get("/offers", async (req, res) => {
     }
     let filters = {};
     if (req.query.product_name) {
-      filter.product_name = new RegExp(req.query.title, "i");
+      filters.product_name = new RegExp(req.query.title, "i");
     }
     if (req.query.priceMin && req.query.priceMax) {
-      filter.product_price = {
+      filters.product_price = {
         $lte: Number(priceMax),
         $gte: Number(priceMin),
       };
     } else if (req.query.priceMin) {
-      filter.product_price = {
+      filters.product_price = {
         $gte: Number(priceMin),
       };
     } else if (req.query.priceMax) {
-      filter.product_price = {
+      filters.product_price = {
         $gte: Number(priceMax),
       };
     }
