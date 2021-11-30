@@ -9,8 +9,8 @@ const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.post("/offer/publish", isAuthenticated, async (req, res) => {
   try {
-    // console.log(req.fields);
-    // console.log(req.files.picture.path);
+    console.log(req.fields);
+    console.log(req.files.picture.path);
 
     const newOffer = new Offer({
       product_name: req.fields.title,
@@ -72,9 +72,23 @@ router.get("/offers", async (req, res) => {
       .skip(pageToSkip)
       .sort(sort)
       .select("product_name product_price");
-    res.json(filter);
+    // res.json(filter);
+    res.json(offers);
   } catch (error) {
     res.status(400).json({ error: { message: error.message } });
+  }
+});
+
+router.get("/offer/:id", async (req, res) => {
+  try {
+    const offer = await Offer.findById(req.params.id).populate({
+      path: "owner",
+      select: "account.username account.phone account.avatar",
+    });
+    res.json(offer);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ message: error.message });
   }
 });
 
