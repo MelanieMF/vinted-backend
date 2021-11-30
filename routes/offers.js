@@ -14,7 +14,7 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
     console.log(req.files.picture.path);
 
     const newOffer = new Offer({
-      count: 8,
+      count: req.fields.offers,
       offers: [
         {
           product_details: [
