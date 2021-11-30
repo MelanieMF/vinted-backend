@@ -6,6 +6,7 @@ const encBase64 = require("crypto-js/enc-base64");
 const uid2 = require("uid2");
 
 const User = require("../models/User");
+const Offer = require("../models/Offer");
 
 // console.log("test");
 
@@ -32,6 +33,11 @@ router.post("/user/signup", async (req, res) => {
           hash: hash,
           salt: salt,
         });
+
+        const resultPicture = await cloudinary.uploader.upload(
+          req.files.pictures.path
+        );
+        newUser.product_image = resultPicture;
 
         await newUser.save();
         res.json({
