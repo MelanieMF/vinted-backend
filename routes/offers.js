@@ -46,9 +46,7 @@ router.get("/offers", async (req, res) => {
     let priceMax = req.query.priceMax;
     let priceMin = req.query.priceMin;
     let skip = Number(page - 1) * limitToShow;
-    if (!skip) {
-      skip = 0;
-    }
+
     let filters = {};
     if (req.query.product_name) {
       filters.product_name = new RegExp(req.query.title, "i");
