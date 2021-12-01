@@ -40,7 +40,7 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
 router.get("/offers", async (req, res) => {
   // console.log(Number(req.query.price));
   try {
-    const limitToShow = 12;
+    const limitToShow = 10;
     const sort = req.query.sort; // .replace("price-", "")
     let priceMax = req.query.priceMax;
     let priceMin = req.query.priceMin;
