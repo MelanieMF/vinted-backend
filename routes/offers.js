@@ -42,30 +42,30 @@ router.get("/offers", async (req, res) => {
   try {
     const limitToShow = 10;
     const sort = req.query.sort; // .replace("price-", "")
-    // let priceMax = req.query.priceMax;
-    // let priceMin = req.query.priceMin;
-    // let skip = Number(req.query.skip) * limitToShow;
-    // if (!skip) {
-    //   skip = 0;
-    // }
-    // let filters = {};
-    // if (req.query.product_name) {
-    //   filters.product_name = new RegExp(req.query.title, "i");
-    // }
-    // if (req.query.priceMin && req.query.priceMax) {
-    //   filters.product_price = {
-    //     $lte: Number(priceMax),
-    //     $gte: Number(priceMin),
-    //   };
-    // } else if (req.query.priceMin) {
-    //   filters.product_price = {
-    //     $gte: Number(priceMin),
-    //   };
-    // } else if (req.query.priceMax) {
-    //   filters.product_price = {
-    //     $gte: Number(priceMax),
-    //   };
-    // }
+    let priceMax = req.query.priceMax;
+    let priceMin = req.query.priceMin;
+    let skip = Number(req.query.skip) * limitToShow;
+    if (!skip) {
+      skip = 0;
+    }
+    let filters = {};
+    if (req.query.product_name) {
+      filters.product_name = new RegExp(req.query.title, "i");
+    }
+    if (req.query.priceMin && req.query.priceMax) {
+      filters.product_price = {
+        $lte: Number(priceMax),
+        $gte: Number(priceMin),
+      };
+    } else if (req.query.priceMin) {
+      filters.product_price = {
+        $gte: Number(priceMin),
+      };
+    } else if (req.query.priceMax) {
+      filters.product_price = {
+        $gte: Number(priceMax),
+      };
+    }
 
     const offers = await Offer.find(filters)
       .populate({
@@ -73,7 +73,7 @@ router.get("/offers", async (req, res) => {
         select: "account",
       })
       .limit(limitToShow)
-      // .skip(skip)
+      .skip(skip)
       .sort(sort);
     // .select("product_name product_price");
     const count = await Offer.countDocuments(filters);
