@@ -42,12 +42,12 @@ router.get("/offers", async (req, res) => {
   try {
     const limitToShow = 10;
     const sort = req.query.sort; // .replace("price-", "")
-    let priceMax = req.query.priceMax;
-    let priceMin = req.query.priceMin;
-    let skip = Number(req.query.skip) * limitToShow;
-    if (!skip) {
-      skip = 0;
-    }
+    // let priceMax = req.query.priceMax;
+    // let priceMin = req.query.priceMin;
+    // let skip = Number(req.query.skip) * limitToShow;
+    // if (!skip) {
+    //   skip = 0;
+    // }
     // let filters = {};
     // if (req.query.product_name) {
     //   filters.product_name = new RegExp(req.query.title, "i");
