@@ -40,11 +40,12 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
 router.get("/offers", async (req, res) => {
   // console.log(Number(req.query.price));
   try {
+    const page = req.query.page;
     const limitToShow = 10;
     const sort = req.query.sort; // .replace("price-", "")
     let priceMax = req.query.priceMax;
     let priceMin = req.query.priceMin;
-    let skip = Number(req.query.skip) * limitToShow;
+    let skip = Number(page - 1) * limitToShow;
     if (!skip) {
       skip = 0;
     }
