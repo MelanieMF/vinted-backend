@@ -48,24 +48,24 @@ router.get("/offers", async (req, res) => {
     if (!skip) {
       skip = 0;
     }
-    let filters = {};
-    if (req.query.product_name) {
-      filters.product_name = new RegExp(req.query.title, "i");
-    }
-    if (req.query.priceMin && req.query.priceMax) {
-      filters.product_price = {
-        $lte: Number(priceMax),
-        $gte: Number(priceMin),
-      };
-    } else if (req.query.priceMin) {
-      filters.product_price = {
-        $gte: Number(priceMin),
-      };
-    } else if (req.query.priceMax) {
-      filters.product_price = {
-        $gte: Number(priceMax),
-      };
-    }
+    // let filters = {};
+    // if (req.query.product_name) {
+    //   filters.product_name = new RegExp(req.query.title, "i");
+    // }
+    // if (req.query.priceMin && req.query.priceMax) {
+    //   filters.product_price = {
+    //     $lte: Number(priceMax),
+    //     $gte: Number(priceMin),
+    //   };
+    // } else if (req.query.priceMin) {
+    //   filters.product_price = {
+    //     $gte: Number(priceMin),
+    //   };
+    // } else if (req.query.priceMax) {
+    //   filters.product_price = {
+    //     $gte: Number(priceMax),
+    //   };
+    // }
 
     const offers = await Offer.find(filters)
       .populate({
